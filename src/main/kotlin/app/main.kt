@@ -5,7 +5,5 @@ import kotlinx.coroutines.runBlocking
 
 fun main() = runBlocking {
     val userController = ServiceLocator.provideUserController()
-    userController.getUser(UserId(0)).collectLatest {
-        println(it)
-    }
+    userController.getUser(UserId(0)).collectLatest { println(it) }
 }

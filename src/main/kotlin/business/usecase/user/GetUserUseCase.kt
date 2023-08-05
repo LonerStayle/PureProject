@@ -1,9 +1,9 @@
 package business.usecase.user
 
-import business.usecase.base.UseCase
 import business.entities.KhaosUser
 import business.entities.UserId
 import business.repository.UserRepository
+import business.usecase.base.UseCase
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.catch
