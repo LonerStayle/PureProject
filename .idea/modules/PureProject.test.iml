@@ -14,5 +14,4 @@
     <orderEntry type="library" name="Gradle: org.jetbrains:annotations:23.0.0" level="project" />
     <orderEntry type="library" name="Gradle: org.jetbrains.kotlin:kotlin-stdlib-common:1.8.20" level="project" />
   </component>
-  <component name="TestModuleProperties" production-module="PureProject.main" />
 </module>
