@@ -89,4 +89,97 @@ Application, Batch Core ,Batch Infrastructure 3가지로 구성 된다.
   4) @Component 클래스는 자동으로 Bean 객체로 등록 되지만, 안될땐 xml 설정이 필요하다.
   
   
-     
+- 스프링의 순환참조 3가지 경우
+```
+//1. 생성자 주입 방식 
+// A 와 B 는 생성부에서 서로를 필요로 하는 순환 참조가 발생한다.
+@Component
+public class BeanA {
+	private BeanB beanB;
+
+	public void BeanA(BeanB beanB){
+		this.beanB = beanB;
+	}
+}
+
+@Component
+public class BeanB {
+	private BeanA beanA;
+
+	public void BeanB(BeanA beanA){
+		this.beanA = beanA;
+	}
+}
+
+```
+
+```
+//2. 필드 주입 방식  
+// 생성자 주입과 달리 런타임 발생한다.
+@Component
+@Slf4j
+public class BeanA {
+	@Autowired
+	private BeanB beanB;
+
+	public void run(){
+		beanB.run();
+	}
+
+	public void call(){
+		log.info("called BeanA");
+	}
+}
+
+@Component
+@Slf4j
+public class BeanB {
+	@Autowired
+	private BeanA beanA;
+
+	public void run(){
+		log.info("Called BeanB");
+		beanA.call();
+	}
+}
+```
+
+```
+//3. 세터 주입 방식  
+// 마찬가지로 런타임에서 발생한다.
+@Component
+@Slf4j
+public class BeanA {
+	private BeanB beanB;
+
+	@Autowired
+	public void setBeanB(BeanB beanB){
+		this.beanB = beanB;
+	}
+
+	public void run(){
+		beanB.run();
+	}
+
+	public void call(){
+		log.info("called BeanA");
+	}
+}
+
+@Component
+@Slf4j
+public class BeanB {
+	private BeanA beanA;
+
+	@Autowired
+	public void setBeanA(BeanA beanA){
+		this.beanA = beanA;
+	}
+
+	public void run(){
+		log.info("Called BeanB");
+		beanA.call();
+	}
+}
+
+```
